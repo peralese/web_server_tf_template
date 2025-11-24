@@ -2,6 +2,12 @@
 
 Deploys a single AWS EC2 instance configured as a web server. The instance uses a security group allowing HTTP/HTTPS and optional ports defined in `web/web.tf`, and bootstrap commands from `server-script.sh`.
 
+What the bootstrap script does (`server-script.sh`):
+- Updates packages (`yum -y update`) with fail-fast shell options.
+- Installs osquery (via upstream repo), enables/starts `osqueryd`, and verifies it is active.
+- Installs nginx, enables/starts it, checks health, and opens HTTP in firewalld when present.
+- Writes a styled landing page to `/usr/share/nginx/html/index.html`.
+
 ## Prerequisites
 - Terraform installed locally
 - AWS credentials configured with permission to create EC2 instances and security groups
