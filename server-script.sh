@@ -28,7 +28,7 @@ sudo tee /usr/share/nginx/html/index.html >/dev/null <<'EOF'
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terraform Challenge #3</title>
+  <title>BluePrint test</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -84,7 +84,7 @@ sudo tee /usr/share/nginx/html/index.html >/dev/null <<'EOF'
 <body>
   <main class="card">
     <div class="badge">Nginx is live</div>
-    <h1>Hello from Terraform (Challenge #3)</h1>
+    <h1>Test of Blueprint application</h1>
     <p>Your server is up and serving content via <code>nginx</code>. Feel free to customize this page by updating <code>/usr/share/nginx/html/index.html</code>.</p>
     <p>Deployed automatically by <strong>server-script.sh</strong>.</p>
   </main>
