@@ -12,13 +12,26 @@ variable "egressrules" {
   default = [80, 443]
 }
 
+variable "ssh_key_name" {
+  description = "Existing AWS EC2 key pair name to associate for SSH access"
+  type        = string
+  default     = null
+}
+
+variable "ssh_ingress_cidrs" {
+  description = "CIDR blocks that may initiate SSH connections"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 resource "aws_instance" "webserver" {
   ami           = "ami-0049e4b5ba14b6d36"
   instance_type = "t2.micro"
   security_groups = [aws_security_group.sg.name]
-  user_data = file("./server-script.sh")
+  key_name        = var.ssh_key_name
+  user_data       = file("./server-script.sh")
 
-tags = {
+  tags = {
     Name = var.webserver
   }
 }
@@ -26,6 +39,14 @@ tags = {
 resource "aws_security_group" "sg" {
   name        = "allow_http"
   description = "Allow HTTP inbound traffic"
+
+  ingress {
+    description = "SSH access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.ssh_ingress_cidrs
+  }
 
 
   dynamic "ingress" {
